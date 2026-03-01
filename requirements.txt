@@ -1,0 +1,8 @@
+pywhatkit
+twilio
+google-generativeai
+python-dotenv
+mcp[cli]
+flask
+requests
+pydantic
