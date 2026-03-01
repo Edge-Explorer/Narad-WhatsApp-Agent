@@ -1,16 +1,18 @@
-# Narad WhatsApp Agent 📱🤖
+# Narad WhatsApp Agent (A+ Extreme Upgrade) 📱🤖
 
-**Narad** is a professional, modular AI assistant focused on seamless communication via WhatsApp. This project follows the **Model Context Protocol (MCP)** and is powered by the **Google Gemini 2.0 Flash API** for high-performance, low-latency natural language processing.
+**Narad** is a professional, modular AI assistant focused on secure, free-to-use communication via WhatsApp. Powered by **Google Gemini 2.0 Flash**, it includes 7 extreme features designed for high-performance automation without monthly costs.
 
 ---
 
-## 🏆 A+ Grade Features
+## 🚀 Extreme Upgrade Features (100% Free)
 
-*   **Modular Architecture**: Clean separation between core logic, agents, and utilities.
-*   **Official WhatsApp Support**: Powered by **Twilio's Official API** for production-grade reliability.
-*   **Built-in MCP Server**: Exposes its WhatsApp capabilities as tools for other AI assistants.
-*   **Professional Logging**: Structured logging for debugging and monitoring.
-*   **Gemini 2.0 Flash Integration**: Uses Google's latest model for fast, intelligent command processing.
+*   🧠 **Smart SQLite Memory**: Persistent conversation history stored locally.
+*   🌐 **Free Web Search**: Live search results via DuckDuckGo (no paid API key needed).
+*   📄 **Document Intelligence**: Built-in support for reading PDF and DOCX files.
+*   🎭 **Professional AI Persona**: Customized "Digital Twin" system prompt for Gemini.
+*   🎤 **Voice Command Support**: Ready for Speech-to-Text integration via `voice_listener.py`.
+*   📁 **Auto-File Organizer**: Organize any folder on your laptop with a single command.
+*   📡 **Official WhatsApp API**: Seamless Twilio integration for production reliability.
 
 ---
 
@@ -20,75 +22,35 @@
 Narad-WhatsApp-Agent/
 ├── src/
 │   ├── backend/
-│   │   ├── agents/          # WhatsApp Agent logic
-│   │   ├── core/            # Gemini API integration & command router
-│   │   └── utils/           # Shared utilities (logging)
-├── main.py                  # Standard CLI entry point
-├── mcp_bridge.py            # MCP Server entry point
-└── .env                     # API keys (Gemini, Twilio)
+│   │   ├── agents/          # Individual AI agents
+│   │   ├── core/            # Gemini Core, Search Tools, & Router
+│   │   ├── database/        # Local SQLite Memory management
+│   │   ├── scripts/         # Voice listener and automation scripts
+│   │   └── utils/           # Shared logging utilities
+├── data/                    # PDF/Docx documents for Narad to read
+├── main.py                  # CLI Entry point
+└── .env                     # App configuration (Gemini & Twilio)
 ```
 
 ---
 
-## 🔑 Configuration & API Keys
+## ⚡ Quick Usage Examples
 
-### 1. Google Gemini API
--   Get your API key from [Google AI Studio](https://aistudio.google.com/).
--   Add it to `.env` as `GEMINI_API_KEY`.
-
-### 2. Twilio WhatsApp API
--   **Step 1**: Register at [Twilio.com](https://www.twilio.com/).
--   **Step 2**: Copy your `Account SID` and `Auth Token` from the Console.
--   **Step 3**: Join the Sandbox by sending the join code to the provided Twilio number.
--   **Step 4**: Update `.env` with your `Account SID`, `Auth Token`, and Sandbox number.
+- **Smart Chat**: Just type `Hi Narad` (It remembers previous chats).
+- **Web Search**: `search: What is the current stock price of Google?`
+- **Read Docs**: `read: resume.pdf` (Reads files from the `data/` folder).
+- **Organize Files**: `organize: C:\Users\ASUS\Downloads`
+- **WhatsApp**: `whatsapp: send "Message" to "+918828296303"`
+- **System Stats**: `stats` (Check your laptop's CPU/RAM).
 
 ---
 
-## 🚀 Getting Started
+## 🔑 Configuration
 
-1.  **Clone the Repo**:
-    ```bash
-    git clone <your-repo-link>
-    cd Narad-WhatsApp-Agent
-    ```
-
-2.  **Create Virtual Environment**:
-    ```bash
-    python -m venv venv
-    .\venv\Scripts\Activate.ps1
-    ```
-
-3.  **Install dependencies**:
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4.  **Run the CLI**:
-    ```bash
-    python main.py
-    ```
+1.  **Google Gemini**: Add `GEMINI_API_KEY` from AI Studio.
+2.  **Twilio**: Add `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, and your `TWILIO_PHONE_NUMBER` (Sandbox).
 
 ---
 
-## 🧪 Usage Examples (CLI)
-
-- **Send WhatsApp**: `whatsapp: send "Hello from Narad!" to "+918828296303"`
-- **AI Chat**: Just type any query, and Narad's Gemini brain will respond.
-
----
-
-## 🧠 Tech Stack
-
-*   **Backend**: Python
-*   **NLP**: Google Gemini 2.0 Flash
-*   **WhatsApp**: Twilio API
-*   **Protocol**: Model Context Protocol (MCP)
-
----
-
-Developed with ❤️ as an "A+ Grade" Narad Agent.
-
-
-
-
+Developed with ❤️ as a Secure, A+ Extreme AI Assistant.
 

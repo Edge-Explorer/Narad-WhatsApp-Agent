@@ -15,20 +15,32 @@ logger = setup_logger("MCP-Server")
 mcp = FastMCP("Narad")
 
 @mcp.tool()
-async def send_whatsapp(message: str, to_number: str, use_twilio: bool = False) -> str:
-    """
-    Sends a WhatsApp message to a specific phone number.
-    Args:
-        message: The text content to send.
-        to_number: The recipient's number (e.g., '+919876543210').
-        use_twilio: Whether to use the official Twilio API (True) or WhatsApp Web (False).
-    """
-    logger.info(f"MCP Tool Request: Send message to {to_number}")
+async def search_web(query: str, max_results: int = 3) -> str:
+    """Performs a 100% free web search using DuckDuckGo."""
+    from src.backend.core.tools import NaradTools
+    return NaradTools.web_search(query, max_results)
+
+@mcp.tool()
+async def read_doc(file_path: str) -> str:
+    """Reads content from a PDF or DOCX file inside the data/ folder."""
+    from src.backend.core.tools import NaradTools
+    return NaradTools.read_document(file_path)
+
+@mcp.tool()
+async def get_stats() -> str:
+    """Gets local system CPU and RAM usage stats."""
+    from src.backend.core.tools import NaradTools
+    return NaradTools.get_system_stats()
+
+@mcp.tool()
+async def send_whatsapp(message: str, to_number: str, use_twilio: bool = True) -> str:
+    """Sends a WhatsApp message via Twilio."""
+    from src.backend.agents.whatsapp_agent import WhatsAppAgent
     agent = WhatsAppAgent(use_twilio=use_twilio)
-    # The agent.run expects a string command, so we format it
     command = f'send "{message}" to "{to_number}"'
     return agent.run(command)
 
 if __name__ == "__main__":
-    logger.info("🚀 Starting Narad MCP Server...")
+    logger.info("🚀 Starting Narad " + "Extreme " + "MCP Server...")
     mcp.run()
+

@@ -1,9 +1,23 @@
+# Core Messaging
 pywhatkit
 twilio
-google-genai
-python-dotenv
+google-generativeai
 
-mcp[cli]
-flask
+# Environment & AI
+python-dotenv
 requests
 pydantic
+duckduckgo-search
+
+# Doc Processing (Free)
+PyPDF2
+python-docx
+
+# Voice & System (Free)
+SpeechRecognition
+psutil
+pyaudio
+
+# Protocols
+mcp[cli]
+flask

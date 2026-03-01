@@ -6,6 +6,15 @@ venv/
 env/
 .env
 
+# Local Databases
+data/*.db
+data/*.sqlite
+
+# Local Data (PDFs/Docx for reading)
+data/*.pdf
+data/*.docx
+!data/readme.txt
+
 # Models (too large)
 models/
 
