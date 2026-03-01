@@ -61,7 +61,7 @@ class WhatsAppAgent(BaseAgent):
         self.logger.info(f"📩 Processing command: {command}")
         
         # Regular expression for parsing the command
-        match = re.search(r'send\s+["\'](.*?)["\']\s+to\s+["\']?(.*?)["\']?$', command, re.IGNORE_CASE)
+        match = re.search(r'send\s+["\'](.*?)["\']\s+to\s+["\']?(.*?)["\']?$', command, re.IGNORECASE)
         
         if not match:
             return '⚠️ Invalid format! Use: whatsapp: send "Message" to "+1234567890"'
