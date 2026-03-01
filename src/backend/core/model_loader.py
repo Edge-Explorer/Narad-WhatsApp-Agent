@@ -1,8 +1,13 @@
 # src/backend/core/model_loader.py
 import os
-from google import genai
+import warnings
 from dotenv import load_dotenv
 from src.backend.utils.logger import setup_logger
+
+# Suppress the deprecation warning from google-generativeai
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore")
+    import google.generativeai as genai
 
 # Load variables
 load_dotenv()
@@ -16,29 +21,25 @@ def init_gemini():
         logger.error("❌ GEMINI_API_KEY not found in .env")
         return None
     
-    logger.info("🧠 Initializing modern Google Gemini AI client...")
+    logger.info("🧠 Initializing Gemini AI (Stable SDK)...")
     try:
-        # Using the new Google GenAI SDK
-        client = genai.Client(api_key=api_key)
-        logger.info("✅ Gemini AI client initialized successfully.")
-        return client
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel('gemini-2.0-flash')
+        logger.info("✅ Gemini AI initialized successfully.")
+        return model
     except Exception as e:
         logger.error(f"❌ Error initializing Gemini: {e}")
         return None
 
 class GeminiWrapper:
     """A wrapper for the Gemini model to provide a .generate interface."""
-    def __init__(self, client):
-        self.client = client
-        self.model_id = "gemini-1.5-flash"
+    def __init__(self, model):
+        self.model = model
         
     def generate(self, prompt: str) -> str:
         try:
             logger.info(f"🧪 Sending prompt to Gemini: '{prompt[:50]}...'")
-            response = self.client.models.generate_content(
-                model=self.model_id,
-                contents=prompt
-            )
+            response = self.model.generate_content(prompt)
             return response.text
         except Exception as e:
             logger.error(f"❌ Gemini generation error: {e}")
@@ -46,9 +47,9 @@ class GeminiWrapper:
 
 def load_model():
     """Helper to maintain compatible interface."""
-    client = init_gemini()
-    if client:
-        return GeminiWrapper(client)
+    raw_model = init_gemini()
+    if raw_model:
+        return GeminiWrapper(raw_model)
     return None
 
 if __name__ == "__main__":
@@ -57,6 +58,7 @@ if __name__ == "__main__":
         print("Model Response:", m.generate("Hello, how are you?"))
     else:
         print("Failed to initialize Gemini.")
+
 
 
 
