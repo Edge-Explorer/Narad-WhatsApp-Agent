@@ -1,7 +1,8 @@
 pywhatkit
 twilio
-google-generativeai
+google-genai
 python-dotenv
+
 mcp[cli]
 flask
 requests

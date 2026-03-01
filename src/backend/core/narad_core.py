@@ -35,22 +35,24 @@ def route_command(command: str, model) -> str:
 
     elif lower_command.startswith("whatsapp:"):
         wa_command = command[len("whatsapp:"):].strip()
-        agent = WhatsAppAgent()
+        # Set use_twilio=True for professional API support
+        agent = WhatsAppAgent(use_twilio=True)
         return agent.run(wa_command)
+
 
     # Brain: Fallback to Gemini LLM
     logger.info("🧠 Passing to Gemini API...")
     try:
         if model:
             return model.generate(command)
-        return "⚠️ Brain not initialized. Please check GEMINI_API_KEY."
+        return "⚠️ Brain not initialized. Please check GEMINI_API_KEY in .env."
     except Exception as e:
         logger.error(f"❌ Gemini Generation Error: {e}")
         return f"❌ Brain Error: {e}"
 
 def start_narad():
     """Main CLI Interface."""
-    logger.info("🟢 Starting Narad Base Core with Gemini...")
+    logger.info("🟢 Starting Narad Base Core...")
     
     model = None
     try:
