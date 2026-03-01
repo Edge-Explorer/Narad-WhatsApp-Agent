@@ -9,31 +9,12 @@ from src.backend.utils.logger import setup_logger
 # Setup Logger
 logger = setup_logger("NaradCore")
 
-# Placeholder stubs for separate projects
-class GitHubAgent:
-    def run(self, command: str) -> str:
-        return "⚠️ GitHub Agent is not installed in this core. (Separate project)"
-
-class EmailAgent:
-    def run(self, command: str) -> str:
-        return "⚠️ Email Agent is not installed in this core. (Separate project)"
 
 def route_command(command: str, model) -> str:
-    """
-    Routes the user command to the appropriate agent.
-    Supported prefixes: github:, email:, whatsapp:
-    """
+    """Routes the user command to the WhatsApp agent or Gemini Brain."""
     lower_command = command.lower().strip()
 
-    if lower_command.startswith("github:"):
-        gh_command = command[len("github:"):].strip()
-        return GitHubAgent().run(gh_command)
-
-    elif lower_command.startswith("email:"):
-        email_command = command[len("email:"):].strip()
-        return EmailAgent().run(email_command)
-
-    elif lower_command.startswith("whatsapp:"):
+    if lower_command.startswith("whatsapp:"):
         wa_command = command[len("whatsapp:"):].strip()
         # Set use_twilio=True for professional API support
         agent = WhatsAppAgent(use_twilio=True)
@@ -64,8 +45,8 @@ def start_narad():
     except Exception as e:
         logger.error(f"❌ Failed to load model: {e}")
 
-    print("\n--- Narad Multi-Agent Assistant (Powered by Gemini) ---")
-    print("Commands: 'whatsapp: ...', 'github: ...', 'email: ...'")
+    print("\n--- Narad WhatsApp Agent (Powered by Gemini) ---")
+    print("Commands: 'whatsapp: send \"Message\" to \"+Number\"' or just Chat")
     print("Type 'exit' to quit.\n")
 
     while True:
