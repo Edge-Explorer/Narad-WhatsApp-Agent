@@ -18,22 +18,43 @@ class NaradTools:
         """Performs a 100% free web search using DuckDuckGo."""
         logger.info(f"🌐 Searching the web for: {query}...")
         try:
-            # Note: Using DDGS context manager from duckduckgo_search/ddgs
+            # Replaced DDGS from duckduckgo_search with potential fix if duckduckgo-search is triggering warnings
             with DDGS() as ddgs:
-                # Use 'text' method for results
-                results = list(ddgs.text(keywords=query, max_results=max_results))
-                if not results:
-                    return "No results found."
+                # v8.x uses text() with keywords or news() with keywords
+                # We'll use text() as standard fallback.
+                results = ddgs.text(keywords=query, max_results=max_results)
                 
-                formatted = [f"[{i+1}] {r['title']}: {r['body']} (Link: {r['href']})" for i, r in enumerate(results)]
-                return "\n\n".join(formatted)
+                # Check for list results
+                output = []
+                for i, r in enumerate(results):
+                    title = r.get('title', 'No Title')
+                    body = r.get('body', r.get('snippet', 'No Snippet available.'))
+                    href = r.get('href', r.get('link', '#'))
+                    output.append(f"[{i+1}] {title}: {body} (Link: {href})")
+                
+                if not output:
+                    # Let's try news search if text search failed for a news query
+                    if "news" in query.lower():
+                        logger.info("ℹ️ Text search failed. Trying News search...")
+                        news_results = ddgs.news(keywords=query, max_results=max_results)
+                        for i, r in enumerate(news_results):
+                            title = r.get('title', 'No Title')
+                            body = r.get('body', r.get('snippet', 'No Snippet available.'))
+                            href = r.get('url', r.get('link', '#'))
+                            output.append(f"[{i+1} NEWS] {title}: {body} (Link: {href})")
+                
+                if not output:
+                    return "Narad ➜ No results found on the web at the moment."
+                
+                return "\n\n".join(output)
+                
         except Exception as e:
             logger.error(f"❌ Search Error: {e}")
-            return f"Search Error: {e}"
+            return f"Narad ➜ Search Error: {e}"
 
     @staticmethod
     def read_document(file_path: str) -> str:
-        """Reads free text from PDF or DOCX files in the data/ folder."""
+        """Reads text from PDF or DOCX files in the data/ folder."""
         logger.info(f"📄 Reading document: {file_path}")
         if not os.path.exists(file_path):
             return f"❌ File not found: {file_path}"
@@ -42,7 +63,7 @@ class NaradTools:
         try:
             if ext == '.pdf':
                 reader = PdfReader(file_path)
-                text = " ".join([page.extract_text() for page in reader.pages[:5]]) # Limit to 5 pages
+                text = " ".join([page.extract_text() for page in reader.pages[:5]])
                 return text if text else "Could not extract text from PDF."
             
             elif ext == '.docx':
@@ -57,7 +78,7 @@ class NaradTools:
 
     @staticmethod
     def organize_folder(dir_path: str):
-        """Organizes a folder into sub-directories by file type (e.g., images, docs)."""
+        """Organizes a folder into sub-directories by file type."""
         logger.info(f"📁 Organizing folder: {dir_path}")
         if not os.path.isdir(dir_path):
             return f"❌ Invalid directory: {dir_path}"
@@ -85,7 +106,7 @@ class NaradTools:
 
     @staticmethod
     def get_system_stats() -> str:
-        """Gets free local system information (CPU, RAM)."""
+        """Gets local system information (CPU, RAM)."""
         try:
             cpu = psutil.cpu_percent()
             ram = psutil.virtual_memory().percent
