@@ -7,7 +7,7 @@ google-generativeai
 python-dotenv
 requests
 pydantic
-duckduckgo-search
+ddgs
 
 # Doc Processing (Free)
 PyPDF2

@@ -18,8 +18,10 @@ class NaradTools:
         """Performs a 100% free web search using DuckDuckGo."""
         logger.info(f"🌐 Searching the web for: {query}...")
         try:
+            # Note: Using DDGS context manager from duckduckgo_search/ddgs
             with DDGS() as ddgs:
-                results = list(ddgs.text(query, max_results=max_results))
+                # Use 'text' method for results
+                results = list(ddgs.text(keywords=query, max_results=max_results))
                 if not results:
                     return "No results found."
                 
